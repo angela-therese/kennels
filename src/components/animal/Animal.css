@@ -2,11 +2,25 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    /* margin-left: 2em */
   }
   
   .animal {
       flex-basis: 28%;
-      margin: 1em;
+      margin-top: 1em;
       padding: 1em;
       border: 1px solid goldenrod;
   }
+
+  #root {
+    margin-left: 2em
+  }
+
+
+.animalForm { 
+    margin: 1em;
+ }
+
+ fieldset {
+     margin-bottom: 1em;
+ }

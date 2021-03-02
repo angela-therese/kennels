@@ -1,31 +1,55 @@
-import React, { useContext, useEffect } from "react"
+
+import React, { useContext, useEffect} from "react"
+import { useHistory } from "react-router-dom"
 import { AnimalContext } from "./AnimalProvider"
-import { AnimalCard } from "./AnimalCard"
+import { LocationContext } from "../location/LocationProvider"
+import { CustomerContext } from "../customer/CustomerProvider"
+import { Animal } from "./Animal"
 import "./Animal.css"
 
 export const AnimalList = () => {
-  // This state changes when `getAnimals()` is invoked below
-   //Line 9 is like an import statement "import { get animals, useanimals} from '/animalProvider.js'"
-  const { animals, getAnimals } = useContext(AnimalContext)
+    const { animals, getAnimals } = useContext(AnimalContext)
+    const { locations, getLocations } = useContext(LocationContext)
+    const { customers, getCustomers } = useContext(CustomerContext)
 
-  //useEffect - reach out to the world for something
-  //function runs when the value in the array changes
-  useEffect(() => {
-    console.log("AnimalList: useEffect - getAnimals")
-    getAnimals()
+    const history = useHistory()
 
-  }, [])
+    useEffect(() => {
+        console.log("AnimalList: Initial render before data")
+        getLocations()
+        .then(getCustomers)
+        .then(getAnimals)
+    }, [])
+    
 
 
-  return (
+
+   return (
+ 
+        <>
+         <h2>Animals</h2>
+		<button onClick={() => {history.push("/animals/create")}}>
+            Add Animal
+        </button>
     <div className="animals">
-      {console.log("AnimalList: Render", animals)}
-      {
-        animals.map(singleAnimal => {
-          //AnimalCard(singleAnimalInLoop) is van js equivalent
-            return <AnimalCard key={singleAnimal.id} animal={singleAnimal} /> //key attribute related to virtual DOM; prop: animal(key) = object from our singleAnimal in loop (value); use key in card
-        })
-      }
+    {animals.map(animal => {
+        const owner = customers.find(c => c.id === animal.customerId)
+        const clinic = locations.find(l => l.id === animal.locationId)
+      
+    
+        return <Animal key={animal.id}
+                    location={clinic}
+                    customer={owner}
+                    animal={animal} />
+    })}
     </div>
-  )
+    </>
+   )
 }
+
+
+
+
+
+
+

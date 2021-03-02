@@ -13,6 +13,8 @@ import { EmployeeProvider } from "./employee/EmployeeProvider"
 import { EmployeeList } from "./employee/EmployeeList"
 import { LocationProvider } from "./location/LocationProvider"
 import { LocationList } from "./location/LocationList"
+import { AnimalForm } from "./animal/AnimalForm"
+import { EmployeeForm } from "./employee/EmployeeForm"
 
 
 export const ApplicationViews = () => {
@@ -24,11 +26,26 @@ export const ApplicationViews = () => {
             </Route>
 
             {/* Render the animal list when http://localhost:3000/animals */}
-            <AnimalProvider>
-                <Route exact path="/animals">
-                    <AnimalList /> //This is a child of Provider so now can access its data
+        <AnimalProvider>
+            <LocationProvider>
+              <CustomerProvider>
+                 <Route exact path="/animals/">
+                      <AnimalList />
                  </Route>
-            </AnimalProvider>
+                 <Route exact path="/animals/create">
+                     <AnimalForm />
+                 </Route>
+              </CustomerProvider>
+          </LocationProvider>
+        </AnimalProvider>
+            
+            
+            
+            {/* <AnimalProvider>
+                <Route exact path="/animals">
+                    <AnimalList /> 
+                 </Route>
+            </AnimalProvider> */}
 
              {/* Render the animal list when http://localhost:3000/locations */}
             
@@ -42,9 +59,14 @@ export const ApplicationViews = () => {
 
             {/* Render the animal list when http://localhost:3000/employees */}
             <EmployeeProvider>
-                <Route exact path="/employees">
-                    <EmployeeList/>
-                 </Route>
+               <LocationProvider>
+                    <Route exact path="/employees">
+                         <EmployeeList/>
+                    </Route>
+                     <Route exact path="/employees/create">
+                        <EmployeeForm />
+                     </Route>
+               </LocationProvider>
             </EmployeeProvider>
            
            
