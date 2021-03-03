@@ -1,83 +1,73 @@
 import React, { useContext, useEffect, useState } from "react"
-import { LocationContext } from "../location/LocationProvider"
+import { LocationContext } from "./LocationProvider"
+import "./Location.css"
 import { useHistory } from 'react-router-dom';
 
 export const LocationForm = () => {
-    const { addEmployee } = useContext(EmployeeContext)
-    const { locations, getLocations } = useContext(LocationContext)
+
+    const { addLocation } = useContext(LocationContext)
+   
     
-    const [employee, setEmployee] = useState({
+
+    const [location, setLocation] = useState({
         name: "",
-        locationId: 0
+        address:""
       
       });
-  
       const history = useHistory();
-
-      useEffect(() => {
-       getLocations()
-      }, [])
-
-      //when a field changes, update state. The return will re-render and display based on the values in state
-    //Controlled component
-    const handleControlledInputChange = (event) => {
+      
+      
+      const handleControlledInputChange = (event) => {
         /* When changing a state object or array,
         always create a copy, make changes, and then set state.*/
-        const newEmployee = { ...employee }
+        const newLocation = { ...location }
      
-        newEmployee[event.target.id] = event.target.value
+        newLocation[event.target.id] = event.target.value
         // update state
-        setEmployee(newEmployee)
+        setLocation(newLocation)
       }
 
-        const handleClickSaveEmployee = (event) => {
-      event.preventDefault() //Prevents the browser from submitting the form
-
-      const newEmployee = { ...employee}
-
-            
-      const intLocationId = parseInt(employee.locationId)
-      
-
-      newEmployee.locationId = parseInt(employee.locationId)
-
-      if (intLocationId === 0) {
-        window.alert("Please select worksite location")
-      } else {
-        //invoke addEmployee passing Employee as an argument.
-        //once complete, change the url and display the Employee list
-        addEmployee(newEmployee)
-        .then(() => history.push("/employees"))
+      const handleClickSaveLocation= (event) => {
+        event.preventDefault() //Prevents the browser from submitting the form
+  
+        const newLocation = { ...location}
+  
+  
+        //PUT AN ALERT HERE TO FILL OUT ALL FIELDS
+          //invoke addEmployee passing Employee as an argument.
+          //once complete, change the url and display the Employee list
+          addLocation(newLocation)
+          .then(() => history.push("/locations"))
+        
       }
-    }
 
-    return (
-      <form className="EmployeeForm">
-          <h2 className="EmployeeForm__title">New Employee</h2>
-          <fieldset>
+
+      return (
+
+        <form className="LocationForm">
+              <h2 className="LocationForm__title">New Location</h2>
+               <fieldset>
               <div className="form-group">
-                  <label htmlFor="name">Employee name: </label>
-                  <input type="text" id="name" onChange={handleControlledInputChange} required autoFocus className="form-control" placeholder="Employee name" value={employee.name}/>
-              </div>
-          </fieldset>
-          <fieldset>
-              <div className="form-group">
-                  <label htmlFor="location">Assign to location: </label>
-                  <select onChange={handleControlledInputChange} defaultValue={employee.locationId} name="locationId" id="locationId" className="form-control" >
-                      <option value="0">Select a location</option>
-                      {locations.map(l => (
-                          <option key={l.id} value={l.id}>
-                              {l.name}
-                          </option>
-                      ))}
-                  </select>
-              </div>
-          </fieldset>
-          
-          <button className="btn btn-primary"
-            onClick={handleClickSaveEmployee}>
-            Save Employee
-          </button>
-      </form>
-    )
+                  <label htmlFor="name">Location name: </label>
+               <input type="text" id="name" onChange={handleControlledInputChange} required autoFocus className="form-control" placeholder="Location name" value={location.name}/>
+             </div>
+            </fieldset>
+             <fieldset>
+                     <div className="form-group">
+                        <label htmlFor="address">Address: </label>
+                        <input type="text" id="address" onChange={handleControlledInputChange} required autoFocus className="form-control" placeholder="Location street address" value={location.address}/>
+                       </div>
+                  </fieldset>
+                  
+             <button className="btn btn-primary"
+                    onClick={handleClickSaveLocation}>
+                    Save Location
+                  </button>
+              </form>
+
+      )
+
+
 }
+
+

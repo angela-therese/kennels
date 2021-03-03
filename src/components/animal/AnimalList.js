@@ -13,6 +13,7 @@ export const AnimalList = () => {
     const { customers, getCustomers } = useContext(CustomerContext)
 
     const history = useHistory()
+   
 
     useEffect(() => {
         console.log("AnimalList: Initial render before data")

@@ -15,7 +15,7 @@ export const EmployeeForm = () => {
       });
   
       const history = useHistory();
-
+      
       useEffect(() => {
        getLocations()
       }, [])
@@ -75,7 +75,19 @@ export const EmployeeForm = () => {
                   </select>
               </div>
           </fieldset>
-          
+          {/* <fieldset>
+              <div className="form-group">
+                  <label htmlFor="customerId">Customer: </label>
+                  <select onChange={handleControlledInputChange} defaultValue={employee.customerId} name="customer" id="customerId" className="form-control" >
+                      <option value="0">Select a customer</option>
+                      {customers.map(c => (
+                          <option key={c.id} value={c.id}>
+                              {c.name}
+                          </option>
+                      ))}
+                  </select>
+              </div>
+          </fieldset> */}
           <button className="btn btn-primary"
             onClick={handleClickSaveEmployee}>
             Save Employee
