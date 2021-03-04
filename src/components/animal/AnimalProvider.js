@@ -28,16 +28,24 @@ export const AnimalProvider = (props) => { //provider works with context to make
         .then(response => response.json())
     }
  
-    // const addAnimal = animalObj => {
-    //     return fetch("http://localhost:8088/animals", {
-    //         method: "POST",
-    //         headers: {
-    //             "Content-Type": "application/json"
-    //         },
-    //         body: JSON.stringify(animalObj)
-    //     })
-    //     .then(getAnimals)
-    // }
+    const getAnimalById = (id) => {
+        return fetch(`http://localhost:8088/animals/${id}?_expand=location&_expand=customer`)
+            .then(res => res.json())
+    }
+
+
+    const releaseAnimal = animalId => {
+        return fetch(`http://localhost:8088/animals/${animalId}`, {
+            method: "DELETE"
+        })
+            .then(getAnimals)
+    }
+
+
+
+
+
+
 
     /*
         You return a context provider which has the
@@ -47,7 +55,7 @@ export const AnimalProvider = (props) => { //provider works with context to make
     */
     return (
         <AnimalContext.Provider value={{
-            animals, getAnimals, addAnimal //this is what other components can use
+            animals, getAnimals, addAnimal, getAnimalById, releaseAnimal //this is what other components can use
         }}>
             {props.children}
         </AnimalContext.Provider>

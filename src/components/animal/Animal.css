@@ -1,13 +1,15 @@
 .animals {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: left;
+    margin-top: 1em
     /* margin-left: 2em */
   }
   
   .animal {
-      flex-basis: 28%;
-      margin-top: 1em;
+      flex-basis: 22%;
+      margin-right: .5em;
+      margin-bottom: .5em;
       padding: 1em;
       border: 1px solid goldenrod;
   }
